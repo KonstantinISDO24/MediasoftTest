@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.4.0'
+    id 'com.google.cloud.tools.jib' version '3.3.2'
 }
 
 group = 'com.mediasoft'
@@ -29,7 +31,27 @@ dependencies {
 
 }
 
+tasks.withType(Test).configureEach {
+    jvmArgs += ["-XX:+EnableDynamicAgentLoading"]
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        showStandardStreams = true
+    }
+}
+
 test {
     useJUnitPlatform()
 }
 
+jib {
+    from {
+        image = 'eclipse-temurin:21-jre'
+    }
+    to {
+        image = "product-ms:$version"
+    }
+    container {
+        ports = ['8001']
+        mainClass = 'com.mediasoft.Main'
+    }
+}
