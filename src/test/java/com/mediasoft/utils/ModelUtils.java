@@ -1,5 +1,6 @@
 package com.mediasoft.utils;
 
+import com.mediasoft.controllers.dtos.ProductDto;
 import com.mediasoft.models.Product;
 
 import java.math.BigDecimal;
@@ -21,5 +22,9 @@ public final class ModelUtils {
                 .article("Test-1")
                 .category("Test")
                 .build();
+
     }
+
+
 }
+
